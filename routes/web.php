@@ -8,10 +8,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// middleware group buat product manager
+Route::middleware('auth', 'prodManage')->group(function() {
+    // dashboard
+    Route::get('/manager/dashboard', [managerController::class, 'index']);
 
-// route manager
-Route::get('manager/dashboard', [managerController::class, 'index'])->
-    middleware(['auth', 'prodManage']);
+    // detail order
+    Route::get('manager/detail_orders', [managerController::class, 'detail_orders']);
+});
     
 Route::get('/dashboard', function () {
     return view('dashboard');
