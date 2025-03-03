@@ -64,3 +64,12 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+**--------------------------------------------------------------- HOW TO USE ---------------------------------------------------------------**
+
+## STEP BY STEP FOR USING IN LOCAL COMPUTER
+1. Clone atau unduh zip repository ini.
+2. unduh file sql yang tertera di email.
+3. jalankan server local seperti laragon, xampp, wampp dll.
+4. buka aplikasi DBMS seperti phpmyadmin atau tabletplus yang berbasis SQL/mysql lalu import file sql yang sudah diunduh kedalam salah database
+5. running aplikasi melalui terminal (CMD atau terminal IDE vscode) dengan perintah "php artisan serve"
