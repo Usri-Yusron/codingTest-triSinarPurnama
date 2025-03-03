@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\managerController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -7,6 +8,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+// route manager
+Route::get('manager/dashboard', [managerController::class, 'index'])->
+    middleware(['auth', 'prodManage']);
+    
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

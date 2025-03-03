@@ -28,7 +28,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // kondisi untuk mengecek siapa kah yg login dan return view
+        if($request->user()->usertype == 'prodManage'){
+            return redirect('manager/dashboard');
+        }
+
+        return redirect()->intended(route('dashboard'));
     }
 
     /**
