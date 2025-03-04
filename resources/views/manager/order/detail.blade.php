@@ -31,7 +31,7 @@
                                         class="bx bx-dots-horizontal-rounded font-22 text-option"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="javascript:;">Add Order</a>
+                                    <li><a class="dropdown-item" href="{{ url('manager/add_order') }}">Add Order</a>
                                     </li>
                                 </ul>
                             </div>
@@ -40,49 +40,44 @@
                             <table class="table align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>Product</th>
-                                        <th>Photo</th>
-                                        <th>Product ID</th>
+                                        <th>No</th>
+                                        <th>Order ID</th>
+                                        <th>Operator</th>
+                                        <th>Quantity</th>
+                                        <th>Deadline</th>
                                         <th>Status</th>
-                                        <th>Amount</th>
-                                        <th>Date</th>
-                                        <th>Shipping</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($orders as $item)
                                     <tr>
-                                        <td>Iphone 5</td>
-                                        <td><img src="{{ asset('/assets/images/products/01.png') }}"
-                                                class="product-img-2" alt="product img"></td>
-                                        <td>#9405822</td>
-                                        <td><span
-                                                class="badge bg-gradient-quepal text-white shadow-sm w-100">Paid</span>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->id }}</td>
+                                        <td>{{ $item->operator->name ?? 'Tidak Diketahui' }}</td>
+                                        <td>{{ $item->quantity }}</td>
+                                        <td>{{ $item->due_date }}</td>
+                                        <td>{{ $item->status }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ url('manager/detail_orders') }}"><i class="bx bx-edit"></i></a>
+                                            <a href="{{ url('manager/detail_orders') }}"><i class="text-primary" data-feather="delete"></i></a>
                                         </td>
-                                        <td>$1250.00</td>
-                                        <td>03 Feb 2020</td>
-                                        <td>
-                                            <div class="progress" style="height: 6px;">
-                                                <div class="progress-bar bg-gradient-quepal" role="progressbar"
-                                                    style="width: 100%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
+                                    </tr>                                        
+                                    @endforeach
                                     <tr>
-                                        <td>Earphone GL</td>
-                                        <td><img src="{{ asset('/assets/images/products/02.png') }}"
-                                                class="product-img-2" alt="product img"></td>
-                                        <td>#8304620</td>
-                                        <td><span
-                                                class="badge bg-gradient-blooker text-white shadow-sm w-100">Pending</span>
-                                        </td>
-                                        <td>$1500.00</td>
-                                        <td>05 Feb 2020</td>
+                                        <td>2</td>
+                                        <td>WO-20240226-002</td>
                                         <td>
-                                            <div class="progress" style="height: 6px;">
-                                                <div class="progress-bar bg-gradient-blooker" role="progressbar"
-                                                    style="width: 60%"></div>
-                                            </div>
+                                            <img src="{{ asset('/assets/images/avatars/avatar-2.png') }}"
+                                                class="product-img-2" alt="operator">
+                                        </td>
+                                        <td>1</td>
+                                        <td>03 Feb 2025</td>
+                                        <td>
+                                            <span class="badge bg-gradient-quepal text-white shadow-sm w-100">Paid</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ url('manager/detail_orders') }}"><i class="bx bx-edit"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>

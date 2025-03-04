@@ -15,6 +15,12 @@ Route::middleware('auth', 'prodManage')->group(function() {
 
     // detail order
     Route::get('manager/detail_orders', [managerController::class, 'detail_orders']);
+
+    // add order route
+    Route::get('manager/add_order', [managerController::class, 'add_order']);
+
+    // save work order
+    Route::post('manager/save_order', [managerController::class, 'save_order']);
 });
     
 Route::get('/dashboard', function () {
