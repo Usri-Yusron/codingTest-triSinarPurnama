@@ -15,10 +15,13 @@ Route::middleware('auth', 'prodManage')->group(function() {
     Route::get('/manager/dashboard', [managerController::class, 'index']);
 
     // detail order page
-    Route::get('manager/detail_orders', [managerController::class, 'detail_orders']);
+    Route::get('manager/detail_orders', [managerController::class, 'detail_orders'])->name('manage.order.index');
 
     // add order route page
     Route::get('manager/add_order', [managerController::class, 'add_order']);
+
+    // filter order page
+    Route::get('manage/filter_order', [managerController::class, 'filter_order']);
 
     // save work order function
     Route::post('manager/save_order', [managerController::class, 'save_order']);
@@ -31,6 +34,12 @@ Route::middleware('auth', 'prodManage')->group(function() {
 
     // update order function
     Route::post('manager/update_order/{id}', [managerController::class, 'update_order']);
+
+    // operator page
+    Route::get('manager/detail_operators', [managerController::class, 'detail_operators']);
+
+    // detail operator page
+    Route::get('manager/detail_operator/{id}', [managerController::class, 'detail_operator']);
 
     // chart order
     Route::get('/chart-data', [managerController::class, 'chartData'])->name('chart.data');

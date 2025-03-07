@@ -37,7 +37,7 @@
                 <div class="menu-title">Operator</div>
             </a>
             <ul>
-                <li> <a href="component-alerts.html"><i class="bx bx-right-arrow-alt"></i>Details</a>
+                <li> <a href="{{ url('manager/detail_operators') }}"><i class="bx bx-right-arrow-alt"></i>Details</a>
                 </li>
                 </li>
             </ul>

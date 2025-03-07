@@ -80,7 +80,7 @@
                                                     <option value="pending">Pending</option>
                                                     <option value="in progress">In Progres</option>
                                                     <option value="completed">Completed</option>
-                                                    <option value="cancel">Cancel</option>
+                                                    <option value="Canceled">Cancel</option>
                                                 </select>
                                             </div>
                                             <div class="input_deg">

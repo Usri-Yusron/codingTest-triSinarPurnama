@@ -23,17 +23,7 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <h6 class="mb-0">Orders Status</h6>
-                            </div>
-                            <div class="dropdown ms-auto">
-                                <a class="dropdown-toggle dropdown-toggle-nocaret" href="#"
-                                    data-bs-toggle="dropdown"><i
-                                        class="bx bx-dots-horizontal-rounded font-22 text-option"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{ url('manager/add_order') }}">Add Order</a>
-                                    </li>
-                                </ul>
+                                <h6 class="mb-0">All Operators</h6>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -41,36 +31,31 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th>No</th>
-                                        <th>Order ID</th>
-                                        <th>Product Name</th>
-                                        <th>Operator</th>
-                                        <th>Quantity</th>
-                                        <th>Deadline</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>Nama Panjang</th>
+                                        <th>Pas Photo</th>
+                                        <th>Jabatan</th>
+                                        <th class="text-center">Email</th>
+                                        <th class="text-center">Alamat</th>
+                                        <th class="text-center">Tanggal Bergabung</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($orders as $item)
+                                    @foreach ($operators as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->id }}</td>
-                                            <td>{{ $item->product_name }}</td>
                                             <td>
-                                                <a href="{{ url('manager/detail_operator', $item->operator->id) }}">
-                                                <img src="{{ asset($item->operator->photo ?? 'Tidak Diketahui') }}"
+                                                <a href="{{ url('manager/detail_operator', $item->id) }}">{{ $item->name }}</a>
+                                            </td>
+                                            <td>
+                                                <a href="{{ url('manager/detail_operator', $item->id) }}">
+                                                <img src="{{ asset($item->photo ?? 'Tidak Diketahui') }}"
                                                     class="product-img-2" alt="operator">
                                                 </a>
                                             </td>
-                                            <td>{{ $item->quantity }}</td>
-                                            <td>{{ $item->due_date }}</td>
-                                            <td>{{ $item->status }}</td>
-                                            <td class="text-center">
-                                                <a href="{{ url('manager/edit_order', $item->id) }}"><i class="bx bx-edit"></i></a>
-                                                <a onclick="confirmation(event)" href="{{ url('manager/delete_order', $item->id) }}">
-                                                    <i class="fadeIn animated bx bx-message-square-x"></i>
-                                                </a>
-                                            </td>
+                                            <td>{{ $item->usertype }}</td>
+                                            <td class="text-center">{{ $item->email }}</td>
+                                            <td class="text-center">jl.sukarajin 2</td>
+                                            <td class="text-center">{{ $item->created_at->diffForHumans() }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

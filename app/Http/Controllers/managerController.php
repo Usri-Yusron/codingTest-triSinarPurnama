@@ -12,7 +12,7 @@ class managerController extends Controller
     //dashboar page
     public function index(){
         $manager = Auth::user();
-        $orders = Order::get();
+        $orders = Order::paginate(2);
 
         // ngitung jumlah order
         $order = Order::all()->count();
@@ -24,12 +24,43 @@ class managerController extends Controller
     }
 
     //detail orders page
-    public function detail_orders(){
+    public function detail_orders(Request $request){
         $manager = Auth::user();
-        $orders = Order::get();
+
+        $query = Order::query();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+    
+        if ($request->filled('due_date')) {
+            $query->whereDate('due_date', $request->due_date);
+        }
+    
+        $orders = $query->paginate(3);
         
         return view('manager.order.detail', compact('orders', 'manager'));
     }
+
+    // filter order
+    public function filter_order(Request $request)
+    {
+        $query = Order::query();
+    
+        // Filter berdasarkan status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+    
+        // Filter berdasarkan deadline (due_date)
+        if ($request->filled('due_date')) {
+            $query->whereDate('due_date', $request->due_date);
+        }
+    
+        $orders = $query->paginate(10); // Gunakan pagination
+        return view('manager.order.index', compact('orders'));
+    }
+    
 
     // add order page
     public function add_order(){
@@ -91,6 +122,23 @@ class managerController extends Controller
         toastr()->timeOut(10000)->closeButton()->success('Work order deleted successfully.');
         
         return redirect()->back();
+    }
+
+    // detail operator page
+    public function detail_operators(){
+        $manager = Auth::user();
+        $operators = User::where('usertype', 'operator')->get();
+
+        return view('manager.operator.index', compact('operators', 'manager'));
+    }
+
+    // detail operator page
+    public function detail_operator($id){
+        $manager = Auth::user();
+        $operator = User::find($id);
+        $orders = Order::where('operator_id', $id)->get();
+
+        return view('manager.operator.detail', compact('operator', 'orders', 'manager'));
     }
     
     //chart

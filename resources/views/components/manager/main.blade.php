@@ -58,7 +58,6 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-
                     <table class="table align-middle mb-0">
                         <thead class="table-light">
                             <tr>
@@ -85,14 +84,12 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table>
-                </div>
+                    </table>            
+                </div>    
             </div>
-        </div>
+        </div> 
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -104,7 +101,7 @@
 
                 const ctx = document.getElementById('orderChart');
                 new Chart(ctx, {
-                    type: 'bar',
+                    type: 'doughnut',
                     data: {
                         labels: labels,
                         datasets: [{
@@ -113,8 +110,8 @@
                             backgroundColor: [
                                 'rgb(255, 99, 132, 0.2)',
                                 'rgb(54, 162, 235, 0.2)',
-                                'rgb(255, 205, 86, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
+                                'rgb(5, 205, 86, 0.2)',
+                                'rgba(100, 100, 64, 0.2)'
                             ],
                             borderColor: [
                                 'rgb(255, 99, 132)',

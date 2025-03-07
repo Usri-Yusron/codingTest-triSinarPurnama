@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('product_name')->nullable();
             $table->integer('quantity')->nullable();
             $table->date('due_date');
-            $table->enum('status', ['Pending', 'In Progress', 'Completed', 'Canceled'])->default('Pending');  // Status
+            $table->enum('status', ['Pending', 'In Progress', 'Completed', 'Canceled'])->default('Pending'); 
             $table->unsignedBigInteger('operator_id'); // Operator yang ditugaskan
             $table->timestamps();
 
