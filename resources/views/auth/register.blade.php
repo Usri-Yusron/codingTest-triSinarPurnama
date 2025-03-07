@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
 
         <!-- Name -->
@@ -41,7 +41,7 @@
         <div class="mt-4">
             <x-input-label for="photo" :value="__('Photo profile')" />
 
-            <x-text-input type="file" name="photo" class="form-control mt-1 w-full" id="photo" required
+            <x-text-input type="file" name="photo" class="form-control mt-1 w-full" id="photo" accept="image/*" required
                 autocomplete="photo" />
         </div>
 

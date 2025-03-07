@@ -27,7 +27,7 @@
                             <ol class="breadcrumb mb-0 p-0">
                                 <li class="breadcrumb-item"><a href="{{ url('manager/detail_orders') }}"><i class="bx bx-task"></i></a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">Add Orders</li>
+                                <li class="breadcrumb-item active" aria-current="page">Edit Orders</li>
                             </ol>
                         </nav>
                     </div>
@@ -36,44 +36,47 @@
 
                 <div class="card">
                     <div class="card-body p-4">
-                        <h5 class="card-title">Add New Work Order</h5>
+                        <h5 class="card-title">Edit Order</h5>
                         <hr />
                         <div class="form-body mt-4">
                             <div class="row">
                                 <div class="col-lg">
                                     <div class="border border-3 p-4 rounded">
-                                        <form action="{{ url('/manager/save_order') }}"
+                                        <form action="{{ url('/manager/update_order', $order->id) }}"
                                             method="post"enctype="multipart/form-data">
                                             @csrf
                                             <div class="mb-3">
                                                 <label for="inputProductName" class="form-label">Product Name</label>
                                                 <input type="text" class="form-control" id="inputProductName"
-                                                    name="product_name" placeholder="Enter product name">
+                                                    name="product_name" value="{{ $order->product_name }}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="inputProductQuantity" class="form-label">Quantity</label>
                                                 <input type="number" class="form-control" id="inputQuantity"
-                                                    name="quantity" placeholder="00">
+                                                    name="quantity" value="{{ $order->quantity }}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="inputProductDate" class="form-label">Due datee</label>
                                                 <input type="date" class="form-control" id="inputdate"
-                                                    name="due_date" placeholder="00">
+                                                    name="due_date" value="{{ $order->due_date }}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="inputProductOperator" class="form-label">Operator</label>
                                                 <select class="form-select" id="inputProductOperator"
                                                     name="operator_id">
                                                     <option value="" disabled selected>Pilih Operator</option>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    @foreach ($users as $operator)
+                                                        <option value="{{ $operator->id }}"
+                                                            {{ $operator->id == $order->operator_id ? 'selected' : '' }}>
+                                                            {{ $operator->name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="inputProductStatus" class="form-label">Status</label>
                                                 <select class="form-select" id="inputProductStatus" name="status">
-                                                    <option></option>
+                                                    <option>{{ $order->status }}</option>
                                                     <option value="pending">Pending</option>
                                                     <option value="in progress">In Progres</option>
                                                     <option value="completed">Completed</option>

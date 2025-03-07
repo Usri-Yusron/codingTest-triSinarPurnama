@@ -37,12 +37,12 @@ class RegisteredUserController extends Controller
         ]);
 
         // Upload foto jika ada
-        $imageUrl = request('photo');
+        $imageUrl = null;
         if ($request->hasFile('photo')) {
             $image = $request->file('photo');
-            $imageName = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('media/users/'), $imageName);
-            $imageUrl = 'media/users/' . $imageName;
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('profile'), $imageName);
+            $imageUrl = 'profile/' . $imageName;
         }
 
         // Simpan data ke database

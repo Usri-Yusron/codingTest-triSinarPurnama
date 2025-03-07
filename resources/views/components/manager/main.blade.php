@@ -6,29 +6,10 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>
-                                <h6 class="mb-0">Sales Overview</h6>
-                            </div>
-                            <div class="dropdown ms-auto">
-                                <a class="dropdown-toggle dropdown-toggle-nocaret" href="#"
-                                    data-bs-toggle="dropdown"><i
-                                        class='bx bx-dots-horizontal-rounded font-22 text-option'></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="javascript:;">Action</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="javascript:;">Another action</a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="javascript:;">Something else here</a>
-                                    </li>
-                                </ul>
+                                <h6 class="mb-0">Order Overview</h6>
                             </div>
                         </div>
-                        <div class="chart-container-0">
-                            <canvas id="chart7"></canvas>
-                        </div>
+                        <canvas id="orderChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -42,7 +23,7 @@
                         <div class="d-flex align-items-center">
                             <div>
                                 <p class="mb-0 text-secondary font-14">Total Orders</p>
-                                <h5 class="my-0">8052</h5>
+                                <h5 class="my-0">{{ $order }}</h5>
                             </div>
                             <div class="text-primary ms-auto font-30"><i class='bx bx-task'></i>
                             </div>
@@ -57,7 +38,7 @@
                         <div class="d-flex align-items-center">
                             <div>
                                 <p class="mb-0 text-secondary font-14">Total Operator</p>
-                                <h5 class="my-0">$6.2K</h5>
+                                <h5 class="my-0">{{ $operator }}</h5>
                             </div>
                             <div class="text-danger ms-auto font-30"><i class='bx bx-user-circle'></i>
                             </div>
@@ -77,51 +58,32 @@
                     </div>
                 </div>
                 <div class="table-responsive">
+
                     <table class="table align-middle mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th>Product</th>
-                                <th>Photo</th>
-                                <th>Product ID</th>
+                                <th>No</th>
+                                <th>Order ID</th>
+                                <th>Operator</th>
+                                <th>Quantity</th>
+                                <th>Deadline</th>
                                 <th>Status</th>
-                                <th>Amount</th>
-                                <th>Date</th>
-                                <th>Shipping</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Iphone 5</td>
-                                <td><img src="{{ asset('/assets/images/products/01.png') }}" class="product-img-2"
-                                        alt="product img"></td>
-                                <td>#9405822</td>
-                                <td><span class="badge bg-gradient-quepal text-white shadow-sm w-100">Paid</span></td>
-                                <td>$1250.00</td>
-                                <td>03 Feb 2020</td>
-                                <td>
-                                    <div class="progress" style="height: 6px;">
-                                        <div class="progress-bar bg-gradient-quepal" role="progressbar"
-                                            style="width: 100%"></div>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>Earphone GL</td>
-                                <td><img src="{{ asset('/assets/images/products/02.png') }}" class="product-img-2"
-                                        alt="product img"></td>
-                                <td>#8304620</td>
-                                <td><span class="badge bg-gradient-blooker text-white shadow-sm w-100">Pending</span>
-                                </td>
-                                <td>$1500.00</td>
-                                <td>05 Feb 2020</td>
-                                <td>
-                                    <div class="progress" style="height: 6px;">
-                                        <div class="progress-bar bg-gradient-blooker" role="progressbar"
-                                            style="width: 60%"></div>
-                                    </div>
-                                </td>
-                            </tr>
+                            @foreach ($orders as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->id }}</td>
+                                    <td>
+                                        <img src="{{ asset($item->operator->photo ?? 'Tidak Diketahui') }}"
+                                            class="product-img-2" alt="operator">
+                                    </td>
+                                    <td>{{ $item->quantity }}</td>
+                                    <td>{{ $item->due_date }}</td>
+                                    <td>{{ $item->status }}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -129,3 +91,41 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch("{{ route('chart.data') }}") // Ambil data dari route
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(item => item.status); // Ambil status
+                const values = data.map(item => item.total); // Ambil jumlah order
+
+                const ctx = document.getElementById('orderChart');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Jumlah Order',
+                            data: values,
+                            backgroundColor: [
+                                'rgb(255, 99, 132, 0.2)',
+                                'rgb(54, 162, 235, 0.2)',
+                                'rgb(255, 205, 86, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(54, 162, 235)',
+                                'rgb(255, 205, 86)',
+                                'rgba(255, 159, 64)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    }
+                });
+            });
+    });
+</script>

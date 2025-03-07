@@ -51,35 +51,24 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($orders as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->id }}</td>
-                                        <td>{{ $item->operator->name ?? 'Tidak Diketahui' }}</td>
-                                        <td>{{ $item->quantity }}</td>
-                                        <td>{{ $item->due_date }}</td>
-                                        <td>{{ $item->status }}</td>
-                                        <td class="text-center">
-                                            <a href="{{ url('manager/detail_orders') }}"><i class="bx bx-edit"></i></a>
-                                            <a href="{{ url('manager/detail_orders') }}"><i class="text-primary" data-feather="delete"></i></a>
-                                        </td>
-                                    </tr>                                        
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->id }}</td>
+                                            <td>
+                                                <img src="{{ asset($item->operator->photo ?? 'Tidak Diketahui') }}"
+                                                    class="product-img-2" alt="operator">
+                                            </td>
+                                            <td>{{ $item->quantity }}</td>
+                                            <td>{{ $item->due_date }}</td>
+                                            <td>{{ $item->status }}</td>
+                                            <td class="text-center">
+                                                <a href="{{ url('manager/edit_order', $item->id) }}"><i class="bx bx-edit"></i></a>
+                                                <a onclick="confirmation(event)" href="{{ url('manager/delete_order', $item->id) }}">
+                                                    <i class="fadeIn animated bx bx-message-square-x"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     @endforeach
-                                    <tr>
-                                        <td>2</td>
-                                        <td>WO-20240226-002</td>
-                                        <td>
-                                            <img src="{{ asset('/assets/images/avatars/avatar-2.png') }}"
-                                                class="product-img-2" alt="operator">
-                                        </td>
-                                        <td>1</td>
-                                        <td>03 Feb 2025</td>
-                                        <td>
-                                            <span class="badge bg-gradient-quepal text-white shadow-sm w-100">Paid</span>
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="{{ url('manager/detail_orders') }}"><i class="bx bx-edit"></i></a>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -125,6 +114,36 @@
     <script src="{{ asset('/assets/js/index2.js') }}"></script>
     <!--app JS-->
     <script src="{{ asset('/assets/js/app.js') }}"></script>
+
+    {{-- sweet alert --}}
+    <script type="text/javascript">
+        function confirmation(ev) {
+            ev.preventDefault();
+
+            var urlToRedirect = ev.currentTarget.getAttribute('href');
+
+            console.log(urlToRedirect);
+
+            swal({
+                    title: "Are You Sure To Delete This",
+                    text: "This delete will be parmanent",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+
+                .then((willCancel) => {
+                    if (willCancel) {
+                        window.location.href = urlToRedirect;
+                    }
+                });
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- sweet alert selesai --}}
 </body>
 
 </html>
