@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\managerController;
+use App\Http\Controllers\operatorController;
 use App\Http\Controllers\orderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -45,9 +46,12 @@ Route::middleware('auth', 'prodManage')->group(function() {
     Route::get('/chart-data', [managerController::class, 'chartData'])->name('chart.data');
 });
     
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+// middleware group buat operator
+Route::middleware('auth', 'verified')->group(function() {
+    // dashboard operator
+    Route::get('/operator/dashboard', [operatorController::class, 'index'])->name('dashboard');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

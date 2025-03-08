@@ -37,6 +37,20 @@
                             </div>
                         </div>
                         <div class="table-responsive">
+                            <form method="GET" action="{{ route('manage.order.index') }}" class="mb-3 d-flex gap-2">
+                                <select name="status" class="form-select w-auto">
+                                    <option value="">-- Pilih Status --</option>
+                                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                                    <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                </select>
+                            
+                                <input type="date" name="deadline" class="form-control w-auto" value="{{ request('deadline') }}">
+                            
+                                <button type="submit" class="btn btn-primary">Filter</button>
+                                <a href="{{ route('manage.order.index') }}" class="btn btn-secondary">Reset</a>
+                            </form>
+                            
                             <table class="table align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>

@@ -31,11 +31,15 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'telp' => ['required', 'string', 'max:255'],
+            'alamat' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'photo' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ]);
 
+        dd($request->all());
+        
         // Upload foto jika ada
         $imageUrl = null;
         if ($request->hasFile('photo')) {
@@ -48,10 +52,14 @@ class RegisteredUserController extends Controller
         // Simpan data ke database
         $user = User::create([
             'name' => $request->name,
+            'telp' => $request->telp,
+            'alamat' => $request->alamat,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'photo' => $imageUrl, // Masukkan URL foto ke database
         ]);
+
+        dd($user);
 
 
         event(new Registered($user));
